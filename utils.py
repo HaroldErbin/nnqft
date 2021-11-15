@@ -606,7 +606,7 @@ def plot_lambda(lambda_values, log=True):
     return fig
 
 
-def lambda_table(data, sigma_w, params, N=2, cutoff=None, bias=False,
+def lambda_table(data, sigma_w, params, N=2, cutoff=None, bias=True,
                  n_jobs=-1, verbose=False):
 
     if isinstance(N, int):
@@ -726,9 +726,9 @@ def fit_lambda_sw(sw, u4, d_in=1):
     ath = d_in - 4
     bth = u40 - (4 - d_in) * sw0
 
-    title = f"$u_{{4,0}} = {u4[i0]:.3f}$\n"
-    title += f"$\log_{{10}} u_4 = {a:.2f} \, \log_{{10}} \sigma_W {b:+.2f}$\n"
-    title += f"theory: $\log_{{10}} u_4 = {ath:.2f} \, \log_{{10}} \sigma_W {bth:+.2f}$"
+    title = f"$\log_{{10}} |u_{{4,0}}| = {u4[i0]:.2f}$\n"
+    title += f"$\log_{{10}} |u_4| = {a:.2f} \, \log_{{10}} \sigma_W {b:+.2f}$\n"
+    title += f"theory: $\log_{{10}} |u_4| = {ath:.2f} \, \log_{{10}} \sigma_W {bth:+.2f}$"
     ax.set_title(title)
 
     plt.close()
@@ -748,7 +748,7 @@ def nrg_flow_gauss(d_in, sw0, u0, kr):
     # below (86)
     # u20 = m0^2
     # m0 = sigma_w / np.sqrt(2 * d_in)
-    u20 = sw0**2 / (2 * d_in)
+    u20 = 2 * sw0**2 / d_in
 
     # a0 = data spacing
     # equiv to Lambda dans Halverson et al.
@@ -793,7 +793,7 @@ def nrg_flow_gauss(d_in, sw0, u0, kr):
         raise ValueError("Solution to flow equations not found.")
 
     u2, u4, u6 = results.y
-    sw = np.sqrt(2 * d_in * u2)
+    sw = np.sqrt(d_in * u2 / 2)
 
     return sw, u4, u6
 

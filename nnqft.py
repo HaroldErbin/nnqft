@@ -282,7 +282,7 @@ if args.mode == "lambda":
 
 
 # ---
-# computations: Compine lambda computations for different \sigma_w
+# computations: Combine lambda computations for different \sigma_w
 
 
 if args.mode == "combine_lambda":
@@ -332,7 +332,7 @@ if args.mode == "lambda_sw":
     logger.timer()
 
     lambda_values = lambda_table(inputs, sigma_w, all_params, N=N, cutoff=cutoff,
-                                 bias=False, n_jobs=n_jobs, verbose=args.verbose)
+                                 bias=True, n_jobs=n_jobs, verbose=args.verbose)
 
     logger.timer(show=True)
 
